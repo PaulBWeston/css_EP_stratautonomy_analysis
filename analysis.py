@@ -1,10 +1,16 @@
-# Get party data
+### ANALYSIS
 
-
+# Speech data is retrieved in 
+#   europarl_speeches.py
+# LLM scoring is completed in
+#   prompt_LLM.py
+# speaker data is retrieved in
+#   get_speaker_data.py
 
 
 
 ##### Clean main dataset
+
 import pandas as pd
 
 # Load partial scored file
@@ -58,13 +64,11 @@ df_speaker = pd.read_csv("europarl_speakers_random_v1_wlookup.csv")
 print(df_speaker.head())
 print(df_cleaned.head())
 
-# Analysis
+#### Analysis
 
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-
-
 import matplotlib.pyplot as plt
 import numpy as np
 

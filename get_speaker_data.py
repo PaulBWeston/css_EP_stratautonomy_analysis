@@ -215,7 +215,8 @@ def fetch_org_raw(org_id):
     # org/5153 -> 5153
     org_num = org_id.split("/")[-1]
 
-    url = f"{API_BASE}/organizations/{org_num}"
+    # url = f"{API_BASE}/organizations/{org_num}"
+    url = f"{API_BASE}/organisations/{org_num}"
 
     params = {
         "format": "application/ld+json",
@@ -297,12 +298,44 @@ def build_speakers_dataframe(speeches_csv, out_csv="europarl_speakers.csv", save
     return speakers
 
 
+def find_org_object(raw, org_id):
+    matches = []
+
+    def walk(obj):
+        if isinstance(obj, dict):
+            if obj.get("id") == org_id or obj.get("@id") == org_id:
+                matches.append(obj)
+            for v in obj.values():
+                walk(v)
+        elif isinstance(obj, list):
+            for x in obj:
+                walk(x)
+
+    walk(raw)
+    return matches
+
 if __name__ == "__main__":
     speakers = build_speakers_dataframe(
-        speeches_csv="css_scored_samples_with_llm_vpartial_cleaned.xlsx",
-        out_csv="europarl_speakers_small_v3.csv"
+        speeches_csv="css_scored_samples_with_llm_vrandom_cleaned.xlsx",
+        #speeches_csv="css_scored_samples_with_llm_vpartial_cleaned.xlsx",
+        out_csv="europarl_speakers_random_v1.csv"
     )
 
     print(speakers.head())
 
     #get_speaker_data.py
+
+
+    # raw_org = fetch_org_raw("org/5153")
+    # print(json.dumps(raw_org, indent=2, ensure_ascii=False))
+
+    # raw = fetch_mep_raw("118859")
+
+    # matches = find_org_object(raw, "org/5153")
+
+    print(f"Found {len(matches)} matches")
+    for m in matches[:3]:
+        print(json.dumps(m, indent=2, ensure_ascii=False))
+
+    groups = get_eu_political_group_memberships(raw)
+    print(groups)

@@ -317,15 +317,13 @@ def find_org_object(raw, org_id):
 if __name__ == "__main__":
     speakers = build_speakers_dataframe(
         speeches_csv="css_scored_samples_with_llm_vrandom_cleaned.xlsx",
-        #speeches_csv="css_scored_samples_with_llm_vpartial_cleaned.xlsx",
+        #speeches_csv="css_scored_samples_with_llm_vpartial_cleaned.xlsx", # for TEST
         out_csv="europarl_speakers_random_v1.csv"
     )
 
     print(speakers.head())
 
-    #get_speaker_data.py
-
-
+    # testing specific org
     # raw_org = fetch_org_raw("org/5153")
     # print(json.dumps(raw_org, indent=2, ensure_ascii=False))
 
